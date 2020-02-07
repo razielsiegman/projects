@@ -11,7 +11,7 @@ public abstract class Account {
     protected double cash;
 
     protected Account(long accountNumber, Patron patron){
-        this.accountNumber = accountNumber;
+        this.accountNumber = accountNumber; 
         this.patron = patron;
         this.txHistory = new Transaction[0];
         this.cash = 0;
