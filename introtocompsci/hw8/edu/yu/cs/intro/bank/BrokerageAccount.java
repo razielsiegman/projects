@@ -12,7 +12,7 @@ public class BrokerageAccount extends Account {
     protected BrokerageAccount(long accountNumber, Patron patron, double transactionFee){
         super(accountNumber, patron);
         if(transactionFee < 0){
-            throw new IllegalArgumentException("Can't have negative transactionfee");
+            throw new IllegalArgumentException("Can't have negative transaction fee");
         }
         this.transactionFee = transactionFee;
         this.stocksOwned = new Bank.Stock[0];
@@ -79,12 +79,15 @@ public class BrokerageAccount extends Account {
      * If there are not enough shares, throw an InsufficientAssetsException
      */
     protected void sellShares(Bank.Stock stock, int shares) throws InsufficientAssetsException{
-        int stockArraySlot = 0;
+        int stockArraySlot = -1;
         for(int i = 0; i < stocksOwned.length; i++){
             if((stocksOwned[i]).equals(stock)){
                 stockArraySlot = i;
             }
-        } 
+        }
+        if(stockArraySlot == -1){
+            throw new InsufficientAssetsException();
+        }
         double saleValue = stock.getSharePrice() * (double)shares;
         double fundsNeeded = transactionFee;
         if((this.getAvailableBalance() + saleValue) < fundsNeeded){

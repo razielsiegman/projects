@@ -84,10 +84,14 @@ public class Patron {
      */
     protected double getNetWorth(){
         double netWorth = 0;
-        SavingsAccount savings = this.getSavingsAccount();
+        if(!(this.getSavingsAccount() == null)){
+            SavingsAccount savings = this.getSavingsAccount();
+            netWorth += savings.getTotalBalance();
+        }
+        if(!(this.getBrokerageAccount() == null)){
         BrokerageAccount brokerage = this.getBrokerageAccount();
-        netWorth += savings.getTotalBalance();
         netWorth += brokerage.getTotalBalance();
+        }
         return netWorth;
     }
 }

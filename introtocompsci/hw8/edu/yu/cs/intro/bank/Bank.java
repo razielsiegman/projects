@@ -3,8 +3,8 @@ package edu.yu.cs.intro.bank;
 import edu.yu.cs.intro.bank.exceptions.*;
 
 public class Bank{
-    private static final Bank INSTANCE = new Bank();
-    private Bank(){
+    public static Bank INSTANCE = new Bank();
+    public Bank(){
         this.bankPatrons = new Patron[0];
         this.bankAccounts = new Account[0];
         this.stocksOnMarket = new Stock[0];
@@ -70,6 +70,7 @@ public class Bank{
      */
     public int getNumberOfOutstandingShares(String tickerSymbol){
         int numberOfShares = 0;
+        try{
         Stock stock = this.getStockBySymbol(tickerSymbol);
         for(int i = 0; i < bankAccounts.length; i++){
             if(bankAccounts[i] instanceof BrokerageAccount){
@@ -77,6 +78,7 @@ public class Bank{
                 numberOfShares += account.getNumberOfShares(stock);
             }
         }
+        }catch(ArrayIndexOutOfBoundsException e){}
         return numberOfShares;
     }
 
@@ -85,11 +87,14 @@ public class Bank{
      * if there is no such Stock or if the tickerSymbol is empty or null, return 0
      */
     public int getMarketCapitalization(String tickerSymbol){
+        int capitalizationAsInt = 0;
+        try{
         int numberOfShares = this.getNumberOfOutstandingShares(tickerSymbol);
         Stock stock = this.getStockBySymbol(tickerSymbol);
         double sharePrice = stock.getSharePrice();
         double marketCapitalization = (double)numberOfShares * sharePrice;
-        int capitalizationAsInt = (int)marketCapitalization;
+        capitalizationAsInt = (int)marketCapitalization;
+        }catch(ArrayIndexOutOfBoundsException e){}
         return capitalizationAsInt;
     }
 
@@ -372,13 +377,23 @@ public class Bank{
     public Transaction[] getTransactionHistory(long socialSecurityNumber, String userName, String password) throws AuthenticationException{
         //create array with length of all transactions
         Patron patron = this.checkIdentity(socialSecurityNumber, userName, password);
-        BrokerageAccount brokerage = patron.getBrokerageAccount();
-        SavingsAccount savings = patron.getSavingsAccount();
-        int savingsTransactions = savings.getTransactionHistory().length;
-        int brokerageTransactions = brokerage.getTransactionHistory().length;
+        BrokerageAccount brokerage = null;
+        SavingsAccount savings = null;
+        int brokerageTransactions = 0;
+        int savingsTransactions = 0;
+        Transaction[] brokerageHist = new Transaction[0];
+        Transaction[] savingsHist = new Transaction[0];
+        if(patron.getBrokerageAccount() != null){
+            brokerage = patron.getBrokerageAccount();
+            brokerageTransactions = brokerage.getTransactionHistory().length;
+            brokerageHist = brokerage.getTransactionHistory();
+        }
+        if(patron.getSavingsAccount() != null){
+            savings = patron.getSavingsAccount();
+            savingsTransactions = savings.getTransactionHistory().length;
+            savingsHist = savings.getTransactionHistory();
+        }
         Transaction[] jointTransactions = new Transaction[savingsTransactions + brokerageTransactions];
-        Transaction[] brokerageHist = brokerage.getTransactionHistory();
-        Transaction[] savingsHist = savings.getTransactionHistory();
         for(int i = 0; i < brokerageHist.length; i++){
             jointTransactions[i] = brokerageHist[i];     
         }
@@ -400,8 +415,8 @@ public class Bank{
         int slot = 0;
         boolean duplicate = false;
         int test = 0;
-        for(int i = 0; i < (jointTransactions.length - 1); i++){
-            for(int j = (i + 1); j < (jointTransactions.length - 1); j++){
+        for(int i = 0; i < (jointTransactions.length); i++){
+            for(int j = (i + 1); j < (jointTransactions.length); j++){
                 if(jointTransactions[i].equals(jointTransactions[j])){
                     duplicate = true;
                 }
@@ -416,7 +431,7 @@ public class Bank{
         }
         //arrange transactions in proper order
         for(int i = 0; i < newJoint.length; i++){
-            for(int j = i + 1; j < (newJoint.length); j++){
+            for(int j = (i + 1); j < (newJoint.length); j++){
                 if(newJoint[i].getTime() > newJoint[j].getTime()){
                     Transaction temp = newJoint[i];
                     newJoint[i] = newJoint[j];
