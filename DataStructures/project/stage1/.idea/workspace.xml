@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d14bef28-d90e-4056-bfce-b8d129b15347" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/stage1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stage1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../stage5/.idea/stage5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../stage5/.idea/stage5.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../stage5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../stage5/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../stage5/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../stage5/pom.xml" afterDir="false" />
