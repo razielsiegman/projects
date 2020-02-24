@@ -283,7 +283,7 @@ public class Stage1Test {
     }
 
     private String longTextBuilder(){
-        String longText = "This is a fourth text!  Im gonna make it kinda long, just in case.  (and to make sure that the byte array doesn't have issues with longer texts. fbkjjsdb b jib ni bbin isd bnbi sfsbd" +
+        String longText = "This is a fourth text!  Im gonna make it kinda long, just in case!  (and to make sure that the byte array doesn't have issues with longer texts. fbkjjsdb b jib ni bbin isd bnbi sfsbd" +
             " rtn gb  rwr  th nsfsnfh sftg s" +
             "  wths dhshhrhe hehh hhrtr shst ght t n tr hstsh h hst ht ht " +
             " ht ssthht sh hsth er n dherdndg  erdg " +
