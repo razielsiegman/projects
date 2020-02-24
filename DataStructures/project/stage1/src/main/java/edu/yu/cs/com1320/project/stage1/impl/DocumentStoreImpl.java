@@ -97,6 +97,7 @@ public class DocumentStoreImpl implements DocumentStore {
             PDDocument pdDoc = PDDocument.load(bytes);
             String text = stripper.getText(pdDoc);
             pdDoc.close();
+            text.trim();
             return text;
         } catch (IOException e) {
             e.printStackTrace();

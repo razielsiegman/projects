@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="9" failures="0" name="Stage1Test" time="1.046" errors="0" skipped="0">
+<testsuite tests="9" failures="0" name="Stage1Test" time="1.286" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_221\jre\bin"/>
@@ -65,13 +65,13 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="Stage1Test" name="simpleTest" time="0.712"/>
-  <testcase classname="Stage1Test" name="deleteTesterUsingPutOne" time="0.087"/>
-  <testcase classname="Stage1Test" name="deleteTesterUsingPutTwo" time="0.065"/>
+  <testcase classname="Stage1Test" name="simpleTest" time="0.929"/>
+  <testcase classname="Stage1Test" name="deleteTesterUsingPutOne" time="0.098"/>
+  <testcase classname="Stage1Test" name="deleteTesterUsingPutTwo" time="0.073"/>
   <testcase classname="Stage1Test" name="exceptionTesterOne" time="0.001"/>
   <testcase classname="Stage1Test" name="exceptionTesterTwo" time="0"/>
-  <testcase classname="Stage1Test" name="testWithReplacedUris" time="0.043"/>
-  <testcase classname="Stage1Test" name="deleteTesterOne" time="0.065"/>
-  <testcase classname="Stage1Test" name="deleteTesterTwo" time="0.035"/>
-  <testcase classname="Stage1Test" name="bigTest" time="0.038"/>
+  <testcase classname="Stage1Test" name="testWithReplacedUris" time="0.048"/>
+  <testcase classname="Stage1Test" name="deleteTesterOne" time="0.064"/>
+  <testcase classname="Stage1Test" name="deleteTesterTwo" time="0.029"/>
+  <testcase classname="Stage1Test" name="bigTest" time="0.044"/>
 </testsuite>
