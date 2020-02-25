@@ -102,9 +102,7 @@ public class HashTableImpl <Key,Value> implements HashTable <Key,Value>{
     }
 
     private <Key> int hashFunction(Key k){
-        int hash = k.hashCode();
-        hash = hash % hashArray.length;
-        hash = Math.abs(hash);
+        int hash = (k.hashCode() & 0x7fffffff) % this.hashArray.length;
         return hash;
     }
 

@@ -14,7 +14,7 @@ public class DocumentStoreImpl implements DocumentStore {
 
     private HashTableImpl hashTable = new HashTableImpl();
 
-    public DocumentStoreImpl(){
+    public DocumentStoreImpl() {
         this.hashTable = new HashTableImpl();
     }
 
