@@ -19,7 +19,8 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     public int putDocument(InputStream input, URI uri, DocumentFormat format) {
-        int hashCode = 0;
+        int oldHashCode = 0;
+        int newHashCode = 0;
         if((input == null) || (uri == null) || (format == null)){
             return this.nullInput(input, uri, format);
         }
@@ -31,22 +32,24 @@ public class DocumentStoreImpl implements DocumentStore {
         if(format == DocumentFormat.PDF){
             text = this.pdfToString(bytes);
         }
-        hashCode = text.hashCode();
+        newHashCode = text.hashCode();
         DocumentImpl doc = null;
         doc = (DocumentImpl)hashTable.get(uri);
         if(doc != null) {
-            if (doc.getDocumentTextHashCode() == hashCode) {
-                return hashCode;
+            if (doc.getDocumentTextHashCode() == newHashCode) {
+                return newHashCode;
             }
             else{
-                doc = this.docBuilder(uri,text,hashCode,bytes,format);
+                oldHashCode = doc.getDocumentTextHashCode();
+                doc = this.docBuilder(uri,text,newHashCode,bytes,format);
             }
         }
         else{
-            doc = this.docBuilder(uri, text, hashCode, bytes, format);
+            doc = this.docBuilder(uri, text, newHashCode, bytes, format);
+            oldHashCode = 0;
         }
         hashTable.put(uri, doc);
-        return hashCode;
+        return oldHashCode;
     }
 
     private byte[] byteArrayMaker(InputStream input){
