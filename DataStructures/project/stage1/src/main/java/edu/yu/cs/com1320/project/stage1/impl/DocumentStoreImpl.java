@@ -32,7 +32,8 @@ public class DocumentStoreImpl implements DocumentStore {
         if(format == DocumentFormat.PDF){
             text = this.pdfToString(bytes);
         }
-        newHashCode = text.hashCode();
+        String textTemp = text.trim();
+        newHashCode = textTemp.hashCode();
         DocumentImpl doc = null;
         doc = (DocumentImpl)hashTable.get(uri);
         if(doc != null) {

@@ -170,6 +170,18 @@ public class Stage1Test {
         String textNineAsString = "And, a couple more for fun(and to make sure that separate chaining works properly even when needing more than two slots in each array.";
         String textTenAsString = "text Ten!";
         String textElevenAsString = "And....  eleven";
+        System.out.println("text one hashcode" + textOneAsString.hashCode());
+        System.out.println("text two hashcode" + textTwoAsString.hashCode());
+        System.out.println("text three hashcode" + textThreeAsString.hashCode());
+        System.out.println("text four hashcode" + textFourAsString.hashCode());
+        System.out.println("text five hashcode" + textFiveAsString.hashCode());
+        System.out.println("text six hashcode" + textSixAsString.hashCode());
+        System.out.println("text seven hashcode" + textSevenAsString.hashCode());
+        System.out.println("text eight hashcode" + textEightAsString.hashCode());
+        System.out.println("text nine hashcode" + textNineAsString.hashCode());
+        System.out.println("text ten hashcode" + textTenAsString.hashCode());
+        System.out.println("text eleven hashcode" + textElevenAsString.hashCode());
+
         DocumentStore.DocumentFormat formatOne = DocumentStore.DocumentFormat.PDF;
         DocumentStore.DocumentFormat formatTwo = DocumentStore.DocumentFormat.PDF;
         DocumentStore.DocumentFormat formatThree = DocumentStore.DocumentFormat.PDF;
@@ -240,6 +252,9 @@ public class Stage1Test {
         int textEightHash = docStore.putDocument(streamEight, uriEight, formatEight);
         int textNineHash = docStore.putDocument(streamNine, uriNine, formatNine);
         int textTenHash = docStore.putDocument(streamTen, uriTen, formatTen);
+        System.out.println("text one hash (should be 0)" + textOneHash);
+        System.out.println("text nine hash (should be 0)" + textNineHash);
+        System.out.println("text ten hash (should be the hashcode of text 1)" + textTenHash);
         int textElevenHash = docStore.putDocument(streamEleven, uriEleven, formatEleven);
         return docStore;
     }
