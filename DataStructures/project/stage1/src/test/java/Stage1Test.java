@@ -170,18 +170,6 @@ public class Stage1Test {
         String textNineAsString = "And, a couple more for fun(and to make sure that separate chaining works properly even when needing more than two slots in each array.";
         String textTenAsString = "text Ten!";
         String textElevenAsString = "And....  eleven";
-        System.out.println("text one hashcode" + textOneAsString.hashCode());
-        System.out.println("text two hashcode" + textTwoAsString.hashCode());
-        System.out.println("text three hashcode" + textThreeAsString.hashCode());
-        System.out.println("text four hashcode" + textFourAsString.hashCode());
-        System.out.println("text five hashcode" + textFiveAsString.hashCode());
-        System.out.println("text six hashcode" + textSixAsString.hashCode());
-        System.out.println("text seven hashcode" + textSevenAsString.hashCode());
-        System.out.println("text eight hashcode" + textEightAsString.hashCode());
-        System.out.println("text nine hashcode" + textNineAsString.hashCode());
-        System.out.println("text ten hashcode" + textTenAsString.hashCode());
-        System.out.println("text eleven hashcode" + textElevenAsString.hashCode());
-
         DocumentStore.DocumentFormat formatOne = DocumentStore.DocumentFormat.PDF;
         DocumentStore.DocumentFormat formatTwo = DocumentStore.DocumentFormat.PDF;
         DocumentStore.DocumentFormat formatThree = DocumentStore.DocumentFormat.PDF;
@@ -252,13 +240,105 @@ public class Stage1Test {
         int textEightHash = docStore.putDocument(streamEight, uriEight, formatEight);
         int textNineHash = docStore.putDocument(streamNine, uriNine, formatNine);
         int textTenHash = docStore.putDocument(streamTen, uriTen, formatTen);
-        System.out.println("text one hash (should be 0)" + textOneHash);
-        System.out.println("text nine hash (should be 0)" + textNineHash);
-        System.out.println("text ten hash (should be the hashcode of text 1)" + textTenHash);
         int textElevenHash = docStore.putDocument(streamEleven, uriEleven, formatEleven);
         return docStore;
     }
 
+    @Test
+    public void docStoreWithHashTesting() throws Exception {
+        DocumentStoreImpl docStore = new DocumentStoreImpl();
+        String textOneAsString = "This is a random text.  Im using it as textOne to make sure that java knows what its doing";
+        byte[] textOneAsPdf = this.pdfCreator(textOneAsString);
+        String textTwoAsString = "This is a second random text.Im using it as a second text to make sure that java knows what its doing.And Im also testing out the new line function";
+        byte[] textTwoAsPdf = this.pdfCreator(textTwoAsString);
+        String textThreeAsString = "This is a third random test.By now, statistically, my hashtable should probably be using its separate chaining to store this file";
+        byte[] textThreeAsPdf = this.pdfCreator(textThreeAsString);
+        String textFourAsString = this.longTextBuilder();
+        byte[] textFourAsPdf = this.pdfCreator(textFourAsString);
+        String textFiveAsString = "At this point, every value in the hashtable must contain something.";
+        byte[] textFiveAsPdf = this.pdfCreator(textFiveAsString);
+        String textSixAsString = "Now, separate chaining is certainly being implemented.";
+        byte[] textSixAsPdf = this.pdfCreator(textSixAsString);
+        String textSevenAsString = "Now, I'm going to make a couple strings that won't be inputted as PDFs.";
+        String textEightAsString = "Here's one more.";
+        String textNineAsString = "And, a couple more for fun(and to make sure that separate chaining works properly even when needing more than two slots in each array.";
+        String textTenAsString = "text Ten!";
+        String textElevenAsString = "And....  eleven";
+        DocumentStore.DocumentFormat formatOne = DocumentStore.DocumentFormat.PDF;
+        DocumentStore.DocumentFormat formatTwo = DocumentStore.DocumentFormat.PDF;
+        DocumentStore.DocumentFormat formatThree = DocumentStore.DocumentFormat.PDF;
+        DocumentStore.DocumentFormat formatFour = DocumentStore.DocumentFormat.PDF;
+        DocumentStore.DocumentFormat formatFive = DocumentStore.DocumentFormat.PDF;
+        DocumentStore.DocumentFormat formatSix = DocumentStore.DocumentFormat.PDF;
+        DocumentStore.DocumentFormat formatSeven = DocumentStore.DocumentFormat.TXT;
+        DocumentStore.DocumentFormat formatEight = DocumentStore.DocumentFormat.TXT;
+        DocumentStore.DocumentFormat formatNine = DocumentStore.DocumentFormat.TXT;
+        DocumentStore.DocumentFormat formatTen = DocumentStore.DocumentFormat.TXT;
+        DocumentStore.DocumentFormat formatEleven = DocumentStore.DocumentFormat.TXT;
+        String uriStringOne = ("ftp://ftp.is.co.za/rfc/rfc1808.txt");
+        String uriStringTwo = ("https://example.com/path/resource.txt#fragment");
+        String uriStringThree = ("urn:ietf:rfc:2648");
+        String uriStringFour = ("path/resource.txt");
+        String uriStringFive = ("/path/resource.txt");
+        String uriStringSix = ("resource.txt");
+        String uriStringSeven = ("./resource.txt");
+        String uriStringEight = ("resource.txt");
+        String uriStringNine = ("#fragment");
+        String uriStringTen = ("ftp://ftp.is.co.za/rfc/rfc1808.txt");
+        String uriStringEleven = ("../resource.txt");
+        //URIs one and six should not be present in hashtable
+        URI uriOne = null;
+        URI uriTwo = null;
+        URI uriThree = null;
+        URI uriFour = null;
+        URI uriFive = null;
+        URI uriSix = null;
+        URI uriSeven = null;
+        URI uriEight = null;
+        URI uriNine = null;
+        URI uriTen = null;
+        URI uriEleven = null;
+        try {
+            uriOne = new URI(uriStringOne);
+            uriTwo = new URI(uriStringTwo);
+            uriThree = new URI(uriStringThree);
+            uriFour = new URI(uriStringFour);
+            uriFive = new URI(uriStringFive);
+            uriSix = new URI(uriStringSix);
+            uriSeven = new URI(uriStringSeven);
+            uriEight = new URI(uriStringEight);
+            uriNine = new URI(uriStringNine);
+            uriTen = new URI(uriStringTen);
+            uriEleven = new URI(uriStringEleven);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        InputStream streamOne = new ByteArrayInputStream(textOneAsPdf);
+        InputStream streamTwo = new ByteArrayInputStream(textTwoAsPdf);
+        InputStream streamThree = new ByteArrayInputStream(textThreeAsPdf);
+        InputStream streamFour = new ByteArrayInputStream(textFourAsPdf);
+        InputStream streamFive = new ByteArrayInputStream(textFiveAsPdf);
+        InputStream streamSix = new ByteArrayInputStream(textSixAsPdf);
+        InputStream streamSeven = new ByteArrayInputStream(textSevenAsString.getBytes());
+        InputStream streamEight = new ByteArrayInputStream(textEightAsString.getBytes());
+        InputStream streamNine = new ByteArrayInputStream(textNineAsString.getBytes());
+        InputStream streamTen = new ByteArrayInputStream(textTenAsString.getBytes());
+        InputStream streamEleven = new ByteArrayInputStream(textElevenAsString.getBytes());
+        int textOneHash = docStore.putDocument(streamOne, uriOne, formatOne);
+        int textTwoHash = docStore.putDocument(streamTwo, uriTwo, formatTwo);
+        int textThreeHash = docStore.putDocument(streamThree, uriThree, formatThree);
+        int textFourHash = docStore.putDocument(streamFour, uriFour, formatFour);
+        int textFiveHash = docStore.putDocument(streamFive, uriFive, formatFive);
+        int textSixHash = docStore.putDocument(streamSix, uriSix, formatSix);
+        int textSevenHash = docStore.putDocument(streamSeven, uriSeven, formatSeven);
+        int textEightHash = docStore.putDocument(streamEight, uriEight, formatEight);
+        int textNineHash = docStore.putDocument(streamNine, uriNine, formatNine);
+        int textTenHash = docStore.putDocument(streamTen, uriTen, formatTen);
+        int textElevenHash = docStore.putDocument(streamEleven, uriEleven, formatEleven);
+        assertEquals("doc input that didn't override previous doc should return hash of 0", 0, textOneHash);
+        assertEquals("doc input that didn't override previous doc should return hash of 0", 0, textNineHash);
+        assertEquals("doc input that overrode previous doc should previous hash", textSixAsString.hashCode(), textEightHash);
+    }
 
     private String pdfToString(byte[] bytes) {
         try {
