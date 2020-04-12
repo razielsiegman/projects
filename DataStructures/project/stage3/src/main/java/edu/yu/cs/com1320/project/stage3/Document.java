@@ -2,8 +2,7 @@ package edu.yu.cs.com1320.project.stage3;
 
 import java.net.URI;
 
-public interface Document
-{
+public interface Document {
     /**
      * @return the document as a PDF
      */
@@ -26,6 +25,7 @@ public interface Document
 
     /**
      * how many times does the given word appear in the document?
+     *
      * @param word
      * @return the number of times the given words appears in the document
      */

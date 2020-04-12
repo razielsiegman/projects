@@ -3,11 +3,11 @@ package edu.yu.cs.com1320.project;
 /**
  * Instances of HashTable should be constructed with two type parameters, one for the type of the keys in the table and one for the type of the values
  * Students who are not familiar with Generics should see Chapter 20 in "Java How To Program" by Deitel
+ *
  * @param <Key>
  * @param <Value>
  */
-public interface HashTable<Key,Value>
-{
+public interface HashTable<Key, Value> {
     /**
      * @param k the key whose value should be returned
      * @return the value that is stored in the HashTable for k, or null if there is no such key in the table

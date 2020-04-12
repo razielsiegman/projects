@@ -18,7 +18,7 @@ public interface DocumentStore
      * @param input the document being put
      * @param uri unique identifier for the document
      * @param format indicates which type of document format is being passed
-     * @return the hashcode of the String version of the document
+     * @return if there is no previous doc at the given URI, return 0. If there is a previous doc, return the hashCode of the String version of the previous doc. If InputStream is null, this is a delete, and thus return either the hashCode of the deleted doc or 0 if there is no doc to delete.
      */
     int putDocument(InputStream input, URI uri, DocumentFormat format);
 
@@ -70,28 +70,28 @@ public interface DocumentStore
      * Retrieve all documents whose text starts with the given prefix
      * Documents are returned in sorted, descending order, sorted by the number of times the prefix appears in the document.
      * Search is CASE INSENSITIVE.
-     * @param prefix
+     * @param keywordPrefix
      * @return a List of the matches. If there are no matches, return an empty list.
      */
-    List<String> searchByPrefix(String prefix);
+    List<String> searchByPrefix(String keywordPrefix);
 
     /**
      * same logic as searchByPrefix, but returns the docs as PDFs instead of as Strings
      */
-    List<byte[]> searchPDFsByPrefix(String prefix);
+    List<byte[]> searchPDFsByPrefix(String keywordPrefix);
 
     /**
-     * delete ALL exact matches for the given key
-     * @param key
+     * Completely remove any trace of any document which contains the given keyword
+     * @param keyword
      * @return a Set of URIs of the documents that were deleted.
      */
-    Set<URI> deleteAll(String key);
+    Set<URI> deleteAll(String keyword);
 
     /**
-     * Delete all matches that contain a String with the given prefix.
+     * Completely remove any trace of any document which contains a word that has the given prefix
      * Search is CASE INSENSITIVE.
-     * @param prefix
+     * @param keywordPrefix
      * @return a Set of URIs of the documents that were deleted.
      */
-    Set<URI> deleteAllWithPrefix(String prefix);
+    Set<URI> deleteAllWithPrefix(String keywordPrefix);
 }
