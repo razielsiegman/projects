@@ -345,8 +345,6 @@ public class Stage4Test {
         assertEquals(true, limitList.contains(pdfTxt7));
         assertEquals(true, limitList.contains(pdfTxt6));
         store.searchByPrefix("doc1");
-        System.out.println("doc 10 bytes: " + this.docBytes(pdfData10, pdfTxt10));
-        System.out.println("doc 11 bytes: " + this.docBytes(pdfData11, pdfTxt11));
         store.setMaxDocumentBytes(2041);
         List<String> limitListTwo = store.searchByPrefix("doc1");
         assertEquals(2, limitListTwo.size());
@@ -375,6 +373,28 @@ public class Stage4Test {
         assertEquals(true, limitListFour.contains(pdfTxt8));
         assertEquals(true, limitListFour.contains(pdfTxt7));
         assertEquals(true, limitListFour.contains(pdfTxt6));
+        store.search("doc6");
+        store.search("doc7");
+        store.search("doc9");
+        store.search("doc10");
+        store.search("doc11");
+        int returned2new = store.putDocument(new ByteArrayInputStream(this.pdfData2), this.uri2, DocumentStore.DocumentFormat.PDF);
+        List<String> limitListFive = store.searchByPrefix("doc");
+        assertEquals(6, limitListFive.size());
+        assertEquals(true, limitListFive.contains(pdfTxt11));
+        assertEquals(true, limitListFive.contains(pdfTxt10));
+        assertEquals(true, limitListFive.contains(pdfTxt9));
+        assertEquals(true, limitListFive.contains(pdfTxt2));
+        assertEquals(true, limitListFive.contains(pdfTxt7));
+        assertEquals(true, limitListFive.contains(pdfTxt6));
+        store.search("doc2");
+        store.setMaxDocumentCount(1);
+        List<String> limitListSix = store.searchByPrefix("doc");
+        assertEquals(1, limitListSix.size());
+        assertEquals(true, limitListSix.contains(pdfTxt2));
+        store.setMaxDocumentBytes(1);
+        List<String> limitListSeven = store.searchByPrefix("doc");
+        assertEquals(0, limitListSeven.size());
     }
 
     @Test

@@ -11,9 +11,9 @@ import java.util.NoSuchElementException;
  */
 public class MinHeapImpl<E extends Comparable>
 {
-    protected E[] elements;
-    protected int count;
-    protected Map<E,Integer> elementsToArrayIndex; //used to store the index in the elements array
+    private E[] elements;
+    private int count;
+    private Map<E,Integer> elementsToArrayIndex; //used to store the index in the elements array
 
     public MinHeapImpl(){
     this.elements = (E[]) new Comparable [5];
@@ -27,11 +27,11 @@ public class MinHeapImpl<E extends Comparable>
         this.upHeap(index);
     }
 
-    protected int getArrayIndex(E element){
+    private int getArrayIndex(E element){
         return elementsToArrayIndex.get(element);
     }
 
-    protected void doubleArraySize(){
+    private void doubleArraySize(){
         E[] newArray = (E[]) new Comparable [this.elements.length * 2];
         for(int i = 0; i < this.elements.length; i++){
             newArray[i] = this.elements[i];
@@ -39,14 +39,14 @@ public class MinHeapImpl<E extends Comparable>
         this.elements = newArray;
     }
 
-    protected  boolean isEmpty()
+    private  boolean isEmpty()
     {
         return this.count == 0;
     }
     /**
      * is elements[i] > elements[j]?
      */
-    protected  boolean isGreater(int i, int j)
+    private  boolean isGreater(int i, int j)
     {
         return this.elements[i].compareTo(this.elements[j]) > 0;
     }
@@ -54,7 +54,7 @@ public class MinHeapImpl<E extends Comparable>
     /**
      * swap the values stored at elements[i] and elements[j]
      */
-    protected  void swap(int i, int j)
+    private  void swap(int i, int j)
     {
         E temp = this.elements[i];
         this.elements[i] = this.elements[j];
@@ -67,7 +67,7 @@ public class MinHeapImpl<E extends Comparable>
      *while the key at index k is less than its
      *parent's key, swap its contents with its parent’s
      */
-    protected  void upHeap(int k)
+    private  void upHeap(int k)
     {
         while (k > 1 && this.isGreater(k / 2, k))
         {
@@ -80,7 +80,7 @@ public class MinHeapImpl<E extends Comparable>
      * move an element down the heap until it is less than
      * both its children or is at the bottom of the heap
      */
-    protected  void downHeap(int k)
+    private  void downHeap(int k)
     {
         while (2 * k <= this.count)
         {
