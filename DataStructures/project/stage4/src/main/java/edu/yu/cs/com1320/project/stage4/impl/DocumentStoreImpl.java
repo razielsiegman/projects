@@ -4,6 +4,7 @@ import edu.yu.cs.com1320.project.CommandSet;
 import edu.yu.cs.com1320.project.GenericCommand;
 import edu.yu.cs.com1320.project.Undoable;
 import edu.yu.cs.com1320.project.impl.MinHeapImpl;
+import edu.yu.cs.com1320.project.stage4.Document;
 import edu.yu.cs.com1320.project.stage4.DocumentStore;
 import edu.yu.cs.com1320.project.impl.HashTableImpl;
 import edu.yu.cs.com1320.project.impl.StackImpl;
@@ -560,4 +561,10 @@ public class DocumentStoreImpl implements DocumentStore {
         text = text.toUpperCase();
         return text;
     }
+
+    protected Document getDocument (URI uri){
+        DocumentImpl doc = (DocumentImpl)hashTable.get(uri);
+        return doc;
+    }
+
 }
