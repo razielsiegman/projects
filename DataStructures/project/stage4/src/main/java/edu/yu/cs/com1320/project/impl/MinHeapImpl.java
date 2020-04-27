@@ -1,5 +1,6 @@
-package edu.yu.cs.com1320.project;
+package edu.yu.cs.com1320.project.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -8,16 +9,35 @@ import java.util.NoSuchElementException;
  * an element's array index, which is needed to reheapify an element after its last use time changes.
  * @param <E>
  */
-public abstract class MinHeap<E extends Comparable>
+public class MinHeapImpl<E extends Comparable>
 {
     protected E[] elements;
     protected int count;
     protected Map<E,Integer> elementsToArrayIndex; //used to store the index in the elements array
 
-    public abstract void reHeapify(E element);
-    protected abstract int getArrayIndex(E element);
+    public MinHeapImpl(){
+    this.elements = (E[]) new Comparable [5];
+    this.count = 0;
+    this.elementsToArrayIndex = new HashMap<E, Integer>();
+    }
 
-    protected abstract void doubleArraySize();
+    public void reHeapify(E element){
+        int index = this.getArrayIndex(element);
+        this.downHeap(index);
+        this.upHeap(index);
+    }
+
+    protected int getArrayIndex(E element){
+        return elementsToArrayIndex.get(element);
+    }
+
+    protected void doubleArraySize(){
+        E[] newArray = (E[]) new Comparable [this.elements.length * 2];
+        for(int i = 0; i < this.elements.length; i++){
+            newArray[i] = this.elements[i];
+        }
+        this.elements = newArray;
+    }
 
     protected  boolean isEmpty()
     {
@@ -39,6 +59,8 @@ public abstract class MinHeap<E extends Comparable>
         E temp = this.elements[i];
         this.elements[i] = this.elements[j];
         this.elements[j] = temp;
+        elementsToArrayIndex.put(this.elements[i], i);
+        elementsToArrayIndex.put(this.elements[j], j);
     }
 
     /**
@@ -90,6 +112,7 @@ public abstract class MinHeap<E extends Comparable>
         this.elements[++this.count] = x;
         //percolate it up to maintain heap order property
         this.upHeap(this.count);
+        elementsToArrayIndex.put(x, this.count);
     }
 
     public E removeMin()
@@ -104,6 +127,7 @@ public abstract class MinHeap<E extends Comparable>
         //move new root down as needed
         this.downHeap(1);
         this.elements[this.count + 1] = null; //null it to prepare for GC
+        elementsToArrayIndex.remove(min);
         return min;
     }
 }
