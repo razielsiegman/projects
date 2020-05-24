@@ -207,7 +207,7 @@ public class BTreeTest {
         this.pdfData15 = Utils.textToPdfData(this.pdfTxt15);
     }
 
-    @Test
+    //@Test
     public void bTreeTest() throws Exception {
         DocumentImpl doc1 = new DocumentImpl(uri1, txt1, txt1.hashCode());
         DocumentImpl doc2 = new DocumentImpl(uri2, txt2, txt2.hashCode());

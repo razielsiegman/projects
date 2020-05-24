@@ -29,6 +29,8 @@ public class DocumentPersistenceManager implements PersistenceManager<URI, Docum
     //baseDir is either the file specified by user, or user.dir, if no specification
     public DocumentPersistenceManager(File baseDir) throws IOException {
         this.baseDir = baseDir;
+        File file = new File(String.valueOf(baseDir));
+        file.mkdirs();
     }
 
     @Override

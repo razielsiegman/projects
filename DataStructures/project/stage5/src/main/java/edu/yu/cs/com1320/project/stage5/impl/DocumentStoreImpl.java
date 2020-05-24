@@ -39,15 +39,15 @@ public class DocumentStoreImpl implements DocumentStore {
         this.trie = new TrieImpl();
         this.heap = new MinHeapImpl();
         this.directory = baseDir;
+        this.createBTree();
     }
 
     public DocumentStoreImpl() {
         this.stack = new StackImpl();
         this.trie = new TrieImpl();
         this.heap = new MinHeapImpl();
-        this.directory = new File (System.getProperty("user.dir"));
+        this.directory = new File(System.getProperty("user.dir"));
         this.createBTree();
-
     }
 
     private void createBTree(){
@@ -71,15 +71,15 @@ public class DocumentStoreImpl implements DocumentStore {
     public int putDocument(InputStream input, URI uri, DocumentFormat format) {
         int oldHashCode = 0;
         int newHashCode = 0;
-        if((input == null) || (uri == null) || (format == null)){
+        if ((input == null) || (uri == null) || (format == null)) {
             return this.nullInput(input, uri, format);
         }
         String text = null;
         byte[] bytes = this.byteArrayMaker(input);
-        if(format == DocumentFormat.TXT) {
+        if (format == DocumentFormat.TXT) {
             text = new String(bytes);
         }
-        if(format == DocumentFormat.PDF){
+        if (format == DocumentFormat.PDF) {
             text = this.pdfToString(bytes);
         }
         String textTemp = text.trim();
@@ -87,15 +87,21 @@ public class DocumentStoreImpl implements DocumentStore {
         DocumentImpl doc = null;
         DocumentImpl oldDoc = null;
         boolean onDisk = this.onDisk(uri);
-        doc = (DocumentImpl)bTree.get(uri);
-        if(doc != null) {
+        doc = (DocumentImpl) bTree.get(uri);
+        return this.putImpl(uri, oldHashCode, newHashCode, doc, oldDoc, text, bytes, format, onDisk);
+    }
+
+        private int putImpl(URI uri, int oldHashCode, int newHashCode, DocumentImpl doc, DocumentImpl oldDoc, String text, byte[] bytes, DocumentFormat format, boolean onDisk){
+            if(doc != null) {
             if (doc.getDocumentTextHashCode() == newHashCode) {
                 doc.setLastUseTime(System.nanoTime());
-                heap.reHeapify(doc.getDocRef());
                 if(onDisk){
-                    documentCount++;
-                    byteCount += this.docBytes(doc);
+                    this.addToHeap(uri, doc);
                 }
+                else{
+                    heap.reHeapify(doc.getDocRef());
+                }
+                GenericCommand<URI> command = this.putCommand(uri, doc, doc);
                 return newHashCode;
             }
             else{
@@ -173,48 +179,6 @@ public class DocumentStoreImpl implements DocumentStore {
         }
     }
 
-    private void removeTracesFromStack(URI uri){
-        int stackCount = stack.size();
-        StackImpl tempStack = new StackImpl();
-        for(int i = 1; i <= stackCount; i++){
-            Undoable command = (Undoable) stack.peek();
-            if(this.removeTracesExec(command, uri) == false) {
-                tempStack.push(command);
-                stack.pop();
-            }
-        }
-        int tempStackCount = tempStack.size();
-        for(int i = 1; i <= tempStack.size(); i++){
-            Undoable restoreCommand = (Undoable)tempStack.pop();
-            stack.push(restoreCommand);
-        }
-    }
-
-    private boolean removeTracesExec(Undoable command, URI uri){
-        if(command instanceof GenericCommand){
-            GenericCommand genericCommand = (GenericCommand)command;
-            if(genericCommand.getTarget().equals(uri)){
-                stack.pop();
-                return true;
-            }
-        }
-        if(command instanceof CommandSet){
-            CommandSet commandSet = (CommandSet) command;
-            Iterator iterator = ((CommandSet) command).iterator();
-            while(iterator.hasNext()){
-                GenericCommand currentCommand = (GenericCommand)iterator.next();
-                if(currentCommand.getTarget().equals(uri)){
-                    iterator.remove();
-                    if(commandSet.size() == 0){
-                        stack.pop();
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     private int docBytes(DocumentImpl doc){
         int pdfBytes = doc.getDocumentAsPdf().length;
         int stringBytes = doc.getDocumentAsTxt().getBytes().length;
@@ -247,7 +211,7 @@ public class DocumentStoreImpl implements DocumentStore {
         Function<URI,Boolean> undo = (uri) -> {
             //when undoing an override, the oldDoc is put back into heap and the newDoc is removed from heap
             this.deleteMemoryManagement(uri);
-            this.shrinkHeap(uri, newDoc);
+            this.shrinkHeap(uri, (DocumentImpl) bTree.get(uri));
             bTree.put(uri, oldDoc);
             if(oldDoc != null) {
                 oldDoc.setLastUseTime(System.nanoTime());
@@ -273,9 +237,9 @@ public class DocumentStoreImpl implements DocumentStore {
         else{
             if(onDisk == false){
                 this.deleteMemoryManagement(uri);
+                this.shrinkHeap(uri, doc);
             }
             this.trieRemove(uri, doc);
-            this.shrinkHeap(uri, doc);
             GenericCommand<URI> command = this.deleteCommand(uri, doc);
             stack.push(command);
             bTree.put(uri,null);
@@ -598,24 +562,24 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     public byte[] getDocumentAsPdf(URI uri) {
+        this.memoryManagement(uri);
         DocumentImpl doc = (DocumentImpl)bTree.get(uri);
         if(doc == null){
             return null;
         }
         byte[] pdf= doc.getDocumentAsPdf();
-        this.memoryManagement(uri);
         this.limitCheck();
         doc.setLastUseTime(System.nanoTime());
         return pdf;
     }
 
     public String getDocumentAsTxt(URI uri) {
+        this.memoryManagement(uri);
         DocumentImpl doc = (DocumentImpl)bTree.get(uri);
         if(doc == null){
             return null;
         }
         String text = doc.getDocumentAsTxt();
-        this.memoryManagement(uri);
         this.limitCheck();
         doc.setLastUseTime(System.nanoTime());
         return text;
@@ -681,7 +645,6 @@ public class DocumentStoreImpl implements DocumentStore {
             else{
                 return -1;
             }
-
         }
     }
 }
