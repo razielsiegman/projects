@@ -3,7 +3,7 @@ package edu.yu.cs.com1320.project.stage5;
 import java.net.URI;
 import java.util.Map;
 
-public interface Document
+public interface Document extends Comparable<Document>
 {
     /**
      * @return the document as a PDF
