@@ -6,7 +6,6 @@ import edu.yu.cs.com1320.project.stage5.Document;
 import edu.yu.cs.com1320.project.stage5.PersistenceManager;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -86,7 +85,7 @@ public class DocumentPersistenceManager implements PersistenceManager<URI, Docum
         }
     }
 
-    public class DocumentImplDeserialiser implements JsonDeserializer<DocumentImpl> {
+    private class DocumentImplDeserialiser implements JsonDeserializer<DocumentImpl> {
         @Override
         public DocumentImpl deserialize(JsonElement json, Type typeOf, JsonDeserializationContext context) throws JsonParseException {
             Gson gson = new Gson();

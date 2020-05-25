@@ -16,14 +16,14 @@ import java.util.Map;
 
 public class DocumentImpl implements Document {
 
-    protected URI uri;
-    protected String text;
+    private URI uri;
+    private String text;
     private int txtHash;
     private byte[] pdfBytes;
     private HashMap hashMap;
     private long lastUseTime;
 
-    private DocumentStoreImpl.DocRef docref;
+    private DocumentStoreImpl.DocRef docRef;
 
     public DocumentImpl(URI uri, String text, int txtHash) {
         this.lastUseTime = System.nanoTime();
@@ -53,11 +53,11 @@ public class DocumentImpl implements Document {
     }
 
     protected DocumentStoreImpl.DocRef getDocRef() {
-        return this.docref;
+        return this.docRef;
     }
 
     protected void setDocRef(DocumentStoreImpl.DocRef docRef) {
-        this.docref = docRef;
+        this.docRef = docRef;
     }
 
     private String textMod(String text) {

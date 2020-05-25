@@ -2,9 +2,7 @@ package edu.yu.cs.com1320.project.impl;
 
 import edu.yu.cs.com1320.project.BTree;
 import edu.yu.cs.com1320.project.stage5.PersistenceManager;
-import edu.yu.cs.com1320.project.stage5.impl.DocumentPersistenceManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -420,71 +418,6 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree
         return k1.compareTo(k2) == 0;
     }
 
-    /**
-     * Unit tests the {@code BTreeImpl} data type.
-     *
-     * @param args the command-line arguments
-     */
-    private static void main(String[] args)
-    {
-        BTreeImpl<Integer, String> st = new BTreeImpl<Integer, String>();
-        st.put(1, "one");
-        st.put(2, "two");
-        st.put(3, "three");
-        st.put(4, "four");
-        st.put(5, "five");
-        st.put(6, "six");
-        st.put(7, "seven");
-        st.put(8, "eight");
-        st.put(9, "nine");
-        st.put(10, "ten");
-        st.put(11, "eleven");
-        st.put(12, "twelve");
-        st.put(13, "thirteen");
-        st.put(14, "fourteen");
-        st.put(15, "fifteen");
-        st.put(16, "sixteen");
-        st.put(17, "seventeen");
-        st.put(18, "eighteen");
-        st.put(19, "nineteen");
-        st.put(20, "twenty");
-        st.put(21, "twenty one");
-        st.put(22, "twenty two");
-        st.put(23, "twenty three");
-        st.put(24, "twenty four");
-        st.put(25, "twenty five");
-        st.put(26, "twenty six");
-
-        System.out.println("Size: " + st.size());
-        System.out.println("Height: " + st.height);
-        System.out.println("Key-value pairs, sorted by key:");
-        ArrayList<Entry> entries = st.getOrderedEntries();
-        for(Entry e : entries)
-        {
-            System.out.println("key = " + e.getKey() + "; value = " + e.getValue());
-        }
-
-        Entry min = st.getMinEntry();
-        System.out.println("Minimum Entry: " + "key = " + min.getKey() + "; value = " + min.getValue());
-
-        Entry max = st.getMaxEntry();
-        System.out.println("Maximum Entry: " + "key = " + max.getKey() + "; value = " + max.getValue());
-
-        st.delete(1);
-        min = st.getMinEntry();
-        System.out.println("Minimum Entry after deleting 1: " + "key = " + min.getKey() + "; value = " + min.getValue());
-
-        st.delete(26);
-        max = st.getMaxEntry();
-        System.out.println("Maximum Entry after deleting 26: " + "key = " + max.getKey() + "; value = " + max.getValue());
-
-        System.out.println("Key-value pairs, sorted by key:");
-        entries = st.getOrderedEntries();
-        for(Entry e : entries)
-        {
-            System.out.println("key = " + e.getKey() + "; value = " + e.getValue());
-        }
-    }
 }
 
 /******************************************************************************

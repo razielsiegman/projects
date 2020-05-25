@@ -24,7 +24,7 @@ import java.util.function.Function;
 
 public class DocumentStoreImpl implements DocumentStore {
 
-    public BTreeImpl bTree;
+    private BTreeImpl bTree;
     private StackImpl stack;
     private TrieImpl trie;
     private int documentCount;
@@ -108,7 +108,9 @@ public class DocumentStoreImpl implements DocumentStore {
                 oldHashCode = doc.getDocumentTextHashCode();
                 oldDoc = doc;
                 //in case of override, oldDoc is removed from heap and trie
-                this.deleteMemoryManagement(uri);
+                if(onDisk == false) {
+                    this.deleteMemoryManagement(uri);
+                }
                 this.trieRemove(uri, oldDoc);
                 doc.setLastUseTime(Long.MIN_VALUE);
                 heap.reHeapify(doc.getDocRef());
@@ -134,10 +136,10 @@ public class DocumentStoreImpl implements DocumentStore {
         }
         documentCount++;
         byteCount += this.docBytes(doc);
-        this.limitCheck();
         DocRef docRef = new DocRef(uri);
         doc.setDocRef(docRef);
         heap.insert(docRef);
+        this.limitCheck();
     }
 
     private void limitCheck(){
@@ -210,8 +212,11 @@ public class DocumentStoreImpl implements DocumentStore {
     private GenericCommand<URI> putCommand(URI incomingUri, DocumentImpl oldDoc, DocumentImpl newDoc){
         Function<URI,Boolean> undo = (uri) -> {
             //when undoing an override, the oldDoc is put back into heap and the newDoc is removed from heap
-            this.deleteMemoryManagement(uri);
-            this.shrinkHeap(uri, (DocumentImpl) bTree.get(uri));
+            boolean onDisk = this.onDisk(uri);
+            if(onDisk == false) {
+                this.deleteMemoryManagement(uri);
+                this.shrinkHeap(uri, (DocumentImpl) bTree.get(uri));
+            }
             bTree.put(uri, oldDoc);
             if(oldDoc != null) {
                 oldDoc.setLastUseTime(System.nanoTime());
@@ -254,6 +259,7 @@ public class DocumentStoreImpl implements DocumentStore {
             if(doc != null) {
                 doc.setLastUseTime(System.nanoTime());
                 this.addToHeap(uri, doc);
+                this.limitCheck();
             }
             return true;
         };
@@ -470,7 +476,20 @@ public class DocumentStoreImpl implements DocumentStore {
         return this.deleteAllExecute(uriList);
     }
 
-    public Set<URI> deleteAllExecute(List<URI> uriList){
+    public Set<URI> deleteAllWithPrefix(String prefix) {
+        String prefixMod = this.textMod(prefix);
+        Comparator<URI> comparator = (URI uri1, URI uri2) -> {
+            this.memoryManagement(uri1);
+            this.memoryManagement(uri2);
+            DocumentImpl doc1 = (DocumentImpl) bTree.get(uri1);
+            DocumentImpl doc2 = (DocumentImpl) bTree.get(uri2);
+            return (this.prefixCount(prefixMod, doc2)) - (this.prefixCount(prefixMod, doc1));
+        };
+        List<URI> uriList= trie.getAllWithPrefixSorted(prefixMod, comparator);
+        return this.deleteAllExecute(uriList);
+    }
+
+    private Set<URI> deleteAllExecute(List<URI> uriList){
         List<URI> uriListTwo = new ArrayList<>();
         CommandSet<URI> commandSet = new CommandSet<URI>();
         Set<URI> uriSet = new HashSet<URI>();
@@ -492,18 +511,6 @@ public class DocumentStoreImpl implements DocumentStore {
         }
         stack.push(commandSet);
         return uriSet;
-    }
-
-    public Set<URI> deleteAllWithPrefix(String prefix) {
-        String prefixMod = this.textMod(prefix);
-        Comparator<URI> comparator = (URI uri1, URI uri2) -> {
-            DocumentImpl doc1 = (DocumentImpl) bTree.get(uri1);
-            DocumentImpl doc2 = (DocumentImpl) bTree.get(uri2);
-            return (this.prefixCount(prefixMod, doc2)) - (this.prefixCount(prefixMod, doc1));
-        };
-        List<URI> uriList= trie.getAllWithPrefixSorted(prefixMod, comparator);
-        return this.deleteAllExecute(uriList);
-
     }
 
     public void setMaxDocumentCount(int limit) {
@@ -570,6 +577,7 @@ public class DocumentStoreImpl implements DocumentStore {
         byte[] pdf= doc.getDocumentAsPdf();
         this.limitCheck();
         doc.setLastUseTime(System.nanoTime());
+        heap.reHeapify(doc.getDocRef());
         return pdf;
     }
 
@@ -582,6 +590,7 @@ public class DocumentStoreImpl implements DocumentStore {
         String text = doc.getDocumentAsTxt();
         this.limitCheck();
         doc.setLastUseTime(System.nanoTime());
+        heap.reHeapify(doc.getDocRef());
         return text;
     }
 
