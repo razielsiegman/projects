@@ -24,7 +24,7 @@ public class TestRouter
     public void testBadRoute() {
         this.router = new IPRouter(8,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes1.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes1.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -41,7 +41,7 @@ public class TestRouter
     {
         this.router = new IPRouter(8,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes1.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes1.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -59,7 +59,7 @@ public class TestRouter
     {
         this.router = new IPRouter(8,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes1.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes1.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -74,7 +74,7 @@ public class TestRouter
     public void routes2Test(){
         this.router = new IPRouter(8,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -119,7 +119,7 @@ public class TestRouter
     public void newAddressTest(){
         this.router = new IPRouter(8,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -134,7 +134,7 @@ public class TestRouter
     public void deletedAddressTest(){
         this.router = new IPRouter(8,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -153,7 +153,7 @@ public class TestRouter
     public void deleteNotPresentTest(){
         this.router = new IPRouter(8,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -168,7 +168,7 @@ public class TestRouter
     public void getNotPresentTest(){
         this.router = new IPRouter(8,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -194,7 +194,7 @@ public class TestRouter
     public void lowRangeTest(){
         this.router = new IPRouter(7,4);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -206,7 +206,7 @@ public class TestRouter
     public void fullCacheTest(){
         this.router = new IPRouter(8, 3);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -234,7 +234,7 @@ public class TestRouter
     public void emptyCacheTest(){
         this.router = new IPRouter(8, 3);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -248,7 +248,7 @@ public class TestRouter
     public void oneItemCacheTest(){
         this.router = new IPRouter(8, 3);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -265,7 +265,7 @@ public class TestRouter
     public void overFullCacheTest(){
         this.router = new IPRouter(8, 3);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -294,7 +294,7 @@ public class TestRouter
     public void repeatCacheTest(){
         this.router = new IPRouter(8, 3);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -348,7 +348,7 @@ public class TestRouter
     public void cacheSizeOneTest(){
         this.router = new IPRouter(8, 1);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
@@ -389,7 +389,7 @@ public class TestRouter
     public void cacheSizeTwoTest(){
         this.router = new IPRouter(8, 2);
         try {
-            router.loadRoutes(System.getProperty("user.dir") + File.separator + "routes2.txt");
+            router.loadRoutes(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "routes2.txt");
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Bad routes file name. Tests aborted");
