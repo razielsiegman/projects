@@ -624,7 +624,7 @@ public class DocumentStoreImpl implements DocumentStore {
         return text;
     }
 
-    public Document getDocument(URI uri){
+    protected Document getDocument(URI uri){
         DocumentImpl doc;
         if(this.onDisk(uri)){
             return null;
