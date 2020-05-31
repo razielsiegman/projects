@@ -370,6 +370,7 @@ public class DocumentStoreImpl implements DocumentStore {
         List<String> docAsString = new ArrayList<>();
         long time = System.nanoTime();
         for(URI uri : uriList){
+            memoryManagement(uri);
             DocumentImpl doc = (DocumentImpl)bTree.get(uri);
             doc.setLastUseTime(time);
             heap.reHeapify(doc.getDocRef());
@@ -623,7 +624,7 @@ public class DocumentStoreImpl implements DocumentStore {
         return text;
     }
 
-    protected Document getDocument (URI uri){
+    public Document getDocument(URI uri){
         DocumentImpl doc;
         if(this.onDisk(uri)){
             return null;
