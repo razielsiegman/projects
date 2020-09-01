@@ -24,6 +24,9 @@ public class SearchWithATweak {
         if(list.size() == 0){
             throw new IllegalArgumentException("List contains no elements");
         }
+        if(list.get(list.size() - 1) < list.get(0)){
+            return findFirstReverse(list, key);
+        }
         int first = 0;
         int last = list.size() - 1;
         int middle = last / 2;
@@ -33,9 +36,6 @@ public class SearchWithATweak {
                     middle = middle - 1;
                 }
                 return middle;
-            }
-            if(middle > last || middle < first){
-                throw new IllegalArgumentException("Content must be sorted!");
             }
             if (list.get(middle) > key) {
                 if(middle == first){
@@ -53,8 +53,40 @@ public class SearchWithATweak {
                 middle = (last + first) / 2;
             }
         }
-        if(first > last){
-            throw new IllegalArgumentException("Content must be sorted!");
+        if((first == last) && (list.get(first)) == key){
+            return first;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    private static int findFirstReverse(List<Integer> list , int key ){
+        int first = 0;
+        int last = list.size() - 1;
+        int middle = last / 2;
+        while(first < last) {
+            if (list.get(middle) == key) {
+                while ((middle != 0) && (list.get(middle - 1) == key)){
+                    middle = middle - 1;
+                }
+                return middle;
+            }
+            if (list.get(middle) < key) {
+                if(middle == first){
+                    return -1;
+                }
+                last = middle - 1;
+                middle = (last + first) / 2;
+                continue;
+            }
+            if(list.get(middle) > key){
+                if(middle == last){
+                    return -1;
+                }
+                first = middle + 1;
+                middle = (last + first) / 2;
+            }
         }
         if((first == last) && (list.get(first)) == key){
             return first;
@@ -81,13 +113,13 @@ public class SearchWithATweak {
         if(list.size() == 0){
             throw new IllegalArgumentException("List contains no elements");
         }
+        if(list.get(list.size() - 1) < list.get(0)){
+            return elementEqualReverse(list);
+        }
         int first = 0;
         int last = list.size() - 1;
         int middle = last/2;
         while(first < last) {
-            if(middle > last || middle < first){
-                throw new IllegalArgumentException("Content must be sorted!");
-            }
             if (list.get(middle) == middle) {
                 return middle;
             }
@@ -107,8 +139,35 @@ public class SearchWithATweak {
                 middle = (last + first) / 2;
             }
         }
-        if(first > last){
-            throw new IllegalArgumentException("Content must be sorted!");
+        if((first == last) && (list.get(first)) == first){
+            return first;
+        }
+        return -1;
+    }
+
+    private static int elementEqualReverse(List<Integer> list){
+        int first = 0;
+        int last = list.size() - 1;
+        int middle = last/2;
+        while(first < last) {
+            if (list.get(middle) == middle) {
+                return middle;
+            }
+            if (list.get(middle) < middle) {
+                if(middle == first){
+                    return -1;
+                }
+                last = middle - 1;
+                middle = (last + first) / 2;
+                continue;
+            }
+            if(list.get(middle) > middle){
+                if(middle == last){
+                    return -1;
+                }
+                first = middle + 1;
+                middle = (last + first) / 2;
+            }
         }
         if((first == last) && (list.get(first)) == first){
             return first;
