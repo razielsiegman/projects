@@ -1,5 +1,6 @@
-package edu.yu.introtoalgs;
+package edu.yu.introtoalgs.test;
 
+import edu.yu.introtoalgs.SearchWithATweak;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
