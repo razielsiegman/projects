@@ -1,7 +1,0 @@
-Assignment OrderOfGrowth1 [SiegmanRaziel]: 10/10
-
-very good work!
-
-Pulled files on Fri Sep 18 10:36:56 EDT 2020
-Latest commit of student files ....
-Latest commit of IntroToAlgorithms/assignments/OrderOfGrowth1/OrderOfGrowth1.pdf was on: Fri Sep 18 00:57:57 2020

@@ -1,2 +1,0 @@
-HW4: for future reference - don't use labeled breaks - considered very bad style
-HW5: runSingleExperiment did not check for bad parameter values
